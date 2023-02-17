@@ -1,0 +1,9 @@
+#!/bin/bash
+
+############################################
+# Uninstall NodeBB
+############################################
+##rm -rf /opt/node-red/v3.0.2/node-red
+
+# Remove Quick Install App
+##rm -rf /usr/local/hestia/web/src/app/WebApp/Installers/NodeBB
