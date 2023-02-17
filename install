@@ -5,7 +5,7 @@ export DEBIAN_FRONTEND=noninteractive
 # Install NodeBB
 ############################################
 
-# dir=$PWD
+dir=$PWD
 # if [ ! -d "/opt/node-red" ]; then
 
 #     mkdir -p /opt/node-red
@@ -18,9 +18,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 # fi
 
-# # Copy over our Quick Install App
-# cd $dir
-# rsync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
+# Copy over our Quick Install App
+cd $dir
+sync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
 
-# # Notify installation has finished
-# /usr/local/hestia/bin/v-add-user-notification admin "NodeBB" "&#128153; NodeBB plugin has finished installing."
+# Notify installation has finished
+/usr/local/hestia/bin/v-add-user-notification admin "NodeBB" "&#128153; NodeBB plugin has finished installing."
