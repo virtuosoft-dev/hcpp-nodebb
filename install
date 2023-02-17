@@ -20,7 +20,7 @@ dir=$PWD
 
 # Copy over our Quick Install App
 cd $dir
-sync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
+rsync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
 
 # Notify installation has finished
 /usr/local/hestia/bin/v-add-user-notification admin "NodeBB" "&#128153; NodeBB plugin has finished installing."
