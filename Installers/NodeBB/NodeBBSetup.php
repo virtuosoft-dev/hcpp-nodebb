@@ -17,7 +17,7 @@ class NodeBBSetup extends BaseSetup {
 	protected $config = [
 		"form" => [
 			"nodebb_username" => ["value" => "nbbadmin"],
-			"nodebbpassword" => "password",
+			"nodebb_password" => "password",
 			"nodebb_folder" => ["type" => "text", "value" => "", "placeholder" => "/", "label" => "Install Directory"]
 		],
 		"database" => false,
