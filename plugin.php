@@ -11,6 +11,15 @@ global $hcpp;
 $hcpp->register_install_script( dirname(__FILE__) . '/install' );
 $hcpp->register_uninstall_script( dirname(__FILE__) . '/uninstall' );
 
+// Intercept database creation to specify pgsql
+$hcpp->add_action( 'priv_add_database', function( $args ) {
+    global $hcpp;
+    $hcpp->log( "got add_database action" );
+    $hcpp->log( $args );
+    $hcpp->log( $GLOBALS );
+    return $args;
+});
+
 // Install NodeBB based with the given user options
 $hcpp->add_action( 'invoke_plugin', function( $args ) {
     if ( $args[0] != 'nodebb_install' ) return $args;
@@ -88,13 +97,20 @@ $hcpp->add_action( 'invoke_plugin', function( $args ) {
     return $args;
 });
 
+$hcpp->add_action( 'pre_list_sys_config', function( $args ) {
+    global $hcpp;
+    $hcpp->log( "got pre_list_sys_config action" );
+    $hcpp->log( $_REQUEST );
+    return $args;
+});
+
 // Custom install page
 $hcpp->add_action( 'render_page_body_WEB_setup_webapp', function( $content ) {
     global $hcpp;
     if ( strpos( $_SERVER['REQUEST_URI'], '/add/webapp/?app=NodeBB&' ) === false ) return $content;
 
     // Suppress Data loss alert, and PHP version selector
-    $content = '<style>.form-group:last-of-type,.alert.alert-info.alert-with-icon{display:none;}</style>' . $content;
+    $content = '<style>.alert.alert-info.alert-with-icon{display:none;}</style>' . $content;
 
     if ( !is_dir('/usr/local/hestia/plugins/nodeapp') ) {
 
@@ -116,6 +132,7 @@ $hcpp->add_action( 'render_page_body_WEB_setup_webapp', function( $content ) {
         $msg .= '
         <script>
             $(function() {
+                $("label[for=webapp_php_version]").parent().css("display", "none");
                 let borderColor = $("#webapp_nodebb_username").css("border-color");
                 let toolbar = $(".l-center.edit").html();
                 function nr_validate() {

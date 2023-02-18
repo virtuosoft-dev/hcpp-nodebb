@@ -20,7 +20,7 @@ class NodeBBSetup extends BaseSetup {
 			"nodebb_password" => "password",
 			"nodebb_folder" => ["type" => "text", "value" => "", "placeholder" => "/", "label" => "Install Directory"]
 		],
-		"database" => false,
+		"database" => true,
 		"resources" => [
 		],
 		"server" => [
