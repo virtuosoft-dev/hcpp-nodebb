@@ -32,17 +32,15 @@ if ( ! class_exists( 'NodeBB') ) {
             }
         }
 
-        // Intercept database creation to specify pgsql instead of mysql
+        // Intercept database creation to specify pgsql, utf8 instead of mysql, utf8mb4
         public function priv_add_database( $args ) {
             if ( file_exists( '/tmp/nodebb_pgsql_' . $args[0]) ) {
                 if ( filemtime( '/tmp/nodebb_pgsql_' . $args[0] ) > (time() - 3) ) {
                     $args[4] = 'pgsql';
+                    $args[6] = 'utf8';
                 }
                 unlink( '/tmp/nodebb_pgsql_' . $args[0] );
             }
-            global $hcpp;
-            $hcpp->log( 'Intercepted priv_add_database' );
-            $hcpp->log( $args );
             return $args;
         }
 
