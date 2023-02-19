@@ -12,7 +12,7 @@ class NodeBBSetup extends BaseSetup {
 		"version" => "3.0.2",
 		"thumbnail" => "nodebb-thumb.png",
 	];
-
+ 
 	protected $appname = "nodebb";
 	protected $config = [
 		"form" => [
