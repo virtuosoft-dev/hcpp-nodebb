@@ -25,12 +25,8 @@ if ( ! class_exists( 'NodeBB') ) {
 
         // Intercept form submission to flag database creation
         public function csrf_verified() {
-            global $hcpp;
-            $hcpp->log( $_REQUEST );
             if ( isset( $_REQUEST['app'] ) && $_REQUEST['app'] == 'NodeBB' && isset( $_REQUEST['webapp_database_create'] ) ) {
-                $hcpp->log("Line 30");
                 if ( isset( $_SESSION['look'] ) ) {
-                    $hcpp->log("Line 32");
                     touch( '/tmp/nodebb_pgsql_' . $_SESSION['look'] );
                 }
             }
@@ -42,7 +38,7 @@ if ( ! class_exists( 'NodeBB') ) {
                 if ( filemtime( '/tmp/nodebb_pgsql_' . $args[0] ) < (time() - 3) ) {
                     $args[4] = 'pgsql';
                 }
-                unlink( '/tmp/nodebb_pgsql_' . $args[0] );
+                // unlink( '/tmp/nodebb_pgsql_' . $args[0] );
             }
             global $hcpp;
             $hcpp->log( 'Intercepted priv_add_database' );
