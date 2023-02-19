@@ -32,15 +32,20 @@ if ( ! class_exists( 'NodeBB') ) {
 
         // Intercept form submission to flag database creation
         public function csrf_verified() {
-            if ( isset( $_REQUEST['app']) &&
-                 $_REQUEST['app'] == 'NodeBB' &&
-                 isset( $_REQUEST['webapp_database_create'] ) && 
-                 isset( $_REQUEST['domain'] ) ) {
+            global $hcpp;
+            $hcpp->log( 'csrf_verified()' );
+            $hcpp->log( $_REQUEST );
+            $hcpp->log( $_SESSION );
+            // if ( isset( $_REQUEST['app']) &&
+            //      $_REQUEST['app'] == 'NodeBB' &&
+            //      isset( $_REQUEST['webapp_database_create'] ) && 
+            //      isset( $_REQUEST['domain'] ) ) {
 
-                if ( $this->is_valid_domain_name( $_REQUEST['domain'] ) ) {
-                    touch( '/tmp/nodebb_pgsql_' . $_REQUEST['domain'] );
-                }
-            }
+            //     if ( $this->is_valid_domain_name( $_REQUEST['domain'] ) ) {
+            //         //touch( '/tmp/nodebb_pgsql_' . $_REQUEST['domain'] );
+
+            //     }
+            // }
         }
 
         // Install NodeBB with the given user options
@@ -52,6 +57,8 @@ if ( ! class_exists( 'NodeBB') ) {
         // Intercept database creation to specify pgsql instead of mysql
         public function priv_add_database( $args ) {
             global $hcpp;
+            $hcpp->log( '$hcpp->nodebb->priv_add_database() called' );
+            $hcpp->log( $args );
             $args[4] = 'pgsql';
             return $args;
         }
