@@ -38,7 +38,6 @@ if ( ! class_exists( 'NodeBB') ) {
                 if ( filemtime( '/tmp/nodebb_pgsql_' . $args[0] ) > (time() - 3) ) {
                     $args[4] = 'pgsql';
                     $args[6] = 'utf8';
-                    //echo "type=pgsql\ncharset=utf8\n";
                 }
                 unlink( '/tmp/nodebb_pgsql_' . $args[0] );
             }
