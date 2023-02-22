@@ -7,9 +7,9 @@ require_once( '/usr/local/hestia/web/pluginable.php' );
 class NodeBBSetup extends BaseSetup {
 	protected $appInfo = [
 		"name" => "NodeBB",
-		"group" => "framework",
+		"group" => "forum",
 		"enabled" => true,
-		"version" => "3.0.2",
+		"version" => "2.8.6",
 		"thumbnail" => "nodebb-thumb.png",
 	];
  

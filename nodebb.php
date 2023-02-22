@@ -47,6 +47,16 @@ if ( ! class_exists( 'NodeBB') ) {
         // Install NodeBB with the given user options
         public function invoke_plugin( $args ) {
             if ( $args[0] != 'nodebb_install' ) return $args;
+            global $hcpp;
+            $hcpp->log( "NodeBB: Installing NodeBB" );
+            $hcpp->log( $args );
+
+    # node app.js \
+    #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
+    #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
+    #      || (echo "Unable to install nodebb" && exit 1)
+
+
             return $args;
         }
 

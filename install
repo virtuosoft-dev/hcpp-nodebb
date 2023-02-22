@@ -6,17 +6,15 @@ export DEBIAN_FRONTEND=noninteractive
 ############################################
 
 dir=$PWD
-# if [ ! -d "/opt/node-red" ]; then
+if [ ! -d "/opt/nodebb" ]; then
 
-#     mkdir -p /opt/node-red
-#     cd /tmp
-#     wget https://github.com/node-red/node-red/releases/download/3.0.2/node-red-3.0.2.zip
-#     unzip node-red-3.0.2.zip -d /opt/node-red/v3.0.2
-#     rm node-red-3.0.2.zip
-#     cd /opt/node-red/v3.0.2/node-red
-#     npm install
+    cd /opt
+    git clone -b v2.8.6 https://github.com/NodeBB/NodeBB.git nodebb
+    cp /opt/nodebb/install/package.json /opt/nodebb/package.json
+    cd /opt/nodebb
+    npm install
 
-# fi
+fi
 
 # Copy over our Quick Install App
 cd $dir
