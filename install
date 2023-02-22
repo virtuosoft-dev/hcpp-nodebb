@@ -6,12 +6,13 @@ export DEBIAN_FRONTEND=noninteractive
 ############################################
 
 dir=$PWD
-if [ ! -d "/opt/nodebb" ]; then
+if [ ! -d "/opt/nodebb/v2.8.6" ]; then
 
-    cd /opt
+    mkdir -p /opt/nodebb/v2.8.6
+    cd /opt/nodebb/v2.8.6
     git clone -b v2.8.6 https://github.com/NodeBB/NodeBB.git nodebb
-    cp /opt/nodebb/install/package.json /opt/nodebb/package.json
-    cd /opt/nodebb
+    cp /opt/nodebb/v2.8.6/nodebb/install/package.json /opt/nodebb/v2.8.6/nodebb/package.json
+    cd /opt/nodebb/v2.8.6/nodebb
     npm install
 
 fi
