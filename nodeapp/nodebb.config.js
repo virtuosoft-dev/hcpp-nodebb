@@ -7,15 +7,7 @@ module.exports = {
         let user = __dirname.split('/')[2];
         return [{
             name: app + '-' + domain,
-            script: (function() {
-                let file = __dirname + '/.noderedrc';
-                let ver = 'v3.0.2';
-                const fs = require('fs');
-                if (fs.existsSync(file)) {
-                    ver = fs.readFileSync(file, {encoding:'utf8', flag:'r'}).trim();
-                }
-                return '/opt/node-red/' + ver + '/node-red/red.js';
-            })(),
+            script: 'app.js',
             cwd: __dirname,
             interpreter: (function() {
                 /**
@@ -57,10 +49,12 @@ module.exports = {
                         break;
                     }
                 }
-    
-                // Include port number and the current directory as user path.
+                let root = __dirname.replace(/.*\/nodeapp/, '').trim();
+                if (!root.startsWith('/')) root = '/' + root;
+
+                // Include port number and the url in the arguments.
                 port = parseInt(port.trim().split(' ').pop());
-                return "-p " + port + " -u " + __dirname;
+                return "--port " + port + " --url http://localhost:" + port + root;
             })(),
             watch: ['.restart'],
             ignore_watch: [],
