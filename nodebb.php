@@ -72,8 +72,8 @@ if ( ! class_exists( 'NodeBB') ) {
             $nodebb_secret = bin2hex(openssl_random_pseudo_bytes(16));
             $config = file_get_contents( $nodebb_folder . '/config.json' );
             $config = str_replace( '%nodebb_secret%', $nodebb_secret, $config );
-            $config = str_replace( '%database_name%', $options['database_name'], $config );
-            $config = str_replace( '%database_user%', $options['database_user'], $config );
+            $config = str_replace( '%database_name%', $domain . '_' . $options['database_name'], $config );
+            $config = str_replace( '%database_user%', $domain . '_' . $options['database_user'], $config );
             $config = str_replace( '%database_password%', $options['database_password'], $config );
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
