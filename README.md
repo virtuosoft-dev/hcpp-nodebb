@@ -15,24 +15,14 @@ First, switch to root user:
 sudo -s
 ```
 
-You can just download the archive, unpack, and move it into place:
-
-```
-cd /tmp
-wget https://github.com/Steveorevo/hestiacp-nodebb/archive/refs/heads/main.zip
-unzip main.zip
-mv hestiacp-nodebb-main /usr/local/hestia/plugins/nodebb
-rm main.zip
-```
-
-Note: It is important that the plugin folder name is `nodebb`.
-
-Alternatively (instead of the commands above), you can just clone the repo:
+Then simply clone the repo to your plugins folder, with the name `nodebb`:
 
 ```
 cd /usr/local/hestia/plugins
 git clone https://github.com/steveorevo/hestiacp-nodebb nodebb
 ```
+
+Note: It is important that the destination plugin folder name is `nodebb`.
 
 Be sure to logout and login again to your Hestia Control Panel; the plugin will immediately start installing NodeJS and NodeBB depedencies in the background. A notification will appear under the admin user account indicating *"NodeBB plugin has finished installing"* when complete. This may take awhile before the options appear in Hestia. You can force manual installation via root level SSH:
 

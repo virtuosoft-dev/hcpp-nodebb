@@ -1,14 +1,12 @@
 {
-    "url": "http://localhost:%nodebb_port%/%nodebb_root%", // can be specified with node app.js --url http://localhost:%nodebb_port%/%nodebb_root%
     "secret": "%nodebb_secret%",
     "database": "postgres",
     "postgres": {
         "host": "127.0.0.1",
         "port": "5432",
-        "username": "%db_user%",
-        "password": "%db_pass%",
-        "database": "%db_name%",
+        "username": "%database_user%",
+        "password": "%database_password%",
+        "database": "%database_name%",
         "ssl": "false"
-    },
-    "port": "%nodebb_port%" // can be specified with node app.js --port %nodebb_port%
+    }
 }

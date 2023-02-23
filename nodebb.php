@@ -46,16 +46,59 @@ if ( ! class_exists( 'NodeBB') ) {
 
         // Install NodeBB with the given user options
         public function invoke_plugin( $args ) {
+
             if ( $args[0] != 'nodebb_install' ) return $args;
             global $hcpp;
-            $hcpp->log( "NodeBB: Installing NodeBB" );
-            $hcpp->log( $args );
+            // $hcpp->log( "NodeBB: Installing NodeBB" );
+            $options = json_decode( $args[1], true );
+            $user = $options['user'];
+            $domain = $options['domain'];
+
+            // Copy the NodeBB files to the user folder
+            $nodebb_folder = $options['nodebb_folder'];
+            if ( $nodebb_folder == '' || $nodebb_folder[0] != '/' ) $nodebb_folder = '/' . $nodebb_folder;
+            $nodeapp_folder = "/home/$user/web/$domain/nodeapp";
+            $nodebb_folder = $nodeapp_folder . $nodebb_folder;
+
+            // Create the nodeapp folder 
+            $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " && ";
+            $cmd .= "chown -R $user:$user " . escapeshellarg( $nodeapp_folder );
+            shell_exec( $cmd );
+            
+            // Copy over nodebb files
+            $hcpp->nodeapp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
+            
+            // Fill out config.json
+            $nodebb_secret = bin2hex(openssl_random_pseudo_bytes(16));
+            $config = file_get_contents( $nodebb_folder . '/config.json' );
+            $config = str_replace( '%nodebb_secret%', $nodebb_secret, $config );
+            $config = str_replace( '%database_name%', $options['database_name'], $config );
+            $config = str_replace( '%database_user%', $options['database_user'], $config );
+            $config = str_replace( '%database_password%', $options['database_password'], $config );
+            file_put_contents( $nodebb_folder . '/config.json', $config );
+
+            // Run initial setup
+
+            // $hcpp->log( $options );
+
+            // 19:17:50.49 "NodeBB: Installing NodeBB"
+            // 19:17:50.49 {
+            //     "nodebb_username": "nbbadmin",
+            //     "nodebb_password": "nbpassword",
+            //     "nodebb_folder": "",
+            //     "php_version": "7.3",
+            //     "database_create": "true",
+            //     "database_name": "28605",
+            //     "database_user": "28605",
+            //     "database_password": "d69c24e6d72067c1fc8c",
+            //     "user": "homestead",
+            //     "domain": "test1.openmy.info"
+            // }
 
     # node app.js \
     #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
     #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
     #      || (echo "Unable to install nodebb" && exit 1)
-
 
             return $args;
         }
