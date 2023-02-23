@@ -59,7 +59,8 @@ module.exports = {
             watch: ['.restart'],
             ignore_watch: [],
             watch_delay: 5000,
-            restart_delay: 5000
+            restart_delay: 5000,
+            env: {"NODE_MODULES": "/opt/nodebb/v2.8.6/nodebb"}
         }];
     })()
 }

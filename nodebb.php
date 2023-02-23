@@ -64,8 +64,20 @@ if ( ! class_exists( 'NodeBB') ) {
             $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " && ";
             $cmd .= "chown -R $user:$user " . escapeshellarg( $nodeapp_folder );
             shell_exec( $cmd );
+
+            // Copy over nodebb core files
+            $opt_nodebb = '/opt/nodebb/v2.8.6/nodebb';
+            if (is_dir($opt_nodebb)) {
+                $files = scandir($opt_nodebb);
+
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..' && $file != 'node_modules') {
+                        $hcpp->nodeapp->copy_folder( $opt_nodebb . '/' . $file, $nodebb_folder . '/' . $file, $user );
+                    }
+                }
+            }
             
-            // Copy over nodebb files
+            // Copy over nodebb config files
             $hcpp->nodeapp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
             
             // Fill out config.json
@@ -78,6 +90,7 @@ if ( ! class_exists( 'NodeBB') ) {
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
             // Run initial setup
+            chmod( $nodebb_folder . '/nodebb', 0750 );
 
             // $hcpp->log( $options );
 
@@ -99,7 +112,8 @@ if ( ! class_exists( 'NodeBB') ) {
     #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
     #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
     #      || (echo "Unable to install nodebb" && exit 1)
-
+            // --setup "{\"admin:username\":\"nbbadmin\",\"admin:password\":\"nbbpassword\",\"admin:password:confirm\":\"nbbpassword\",\"admin:email\":\"steveorevo@gmail.com\"}"
+            
             return $args;
         }
 
