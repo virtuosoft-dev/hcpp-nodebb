@@ -67,15 +67,16 @@ if ( ! class_exists( 'NodeBB') ) {
 
             // Copy over nodebb core files
             $opt_nodebb = '/opt/nodebb/v2.8.6/nodebb';
-            if (is_dir($opt_nodebb)) {
-                $files = scandir($opt_nodebb);
+            $hcpp->nodeapp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
+            // if (is_dir($opt_nodebb)) {
+            //     $files = scandir($opt_nodebb);
 
-                foreach ($files as $file) {
-                    if ($file != '.' && $file != '..' && $file != 'node_modules') {
-                        $hcpp->nodeapp->copy_folder( $opt_nodebb . '/' . $file, $nodebb_folder . '/' . $file, $user );
-                    }
-                }
-            }
+            //     foreach ($files as $file) {
+            //         if ($file != '.' && $file != '..' && $file != 'node_modules') {
+            //             $hcpp->nodeapp->copy_folder( $opt_nodebb . '/' . $file, $nodebb_folder . '/' . $file, $user );
+            //         }
+            //     }
+            // }
             
             // Copy over nodebb config files
             $hcpp->nodeapp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
@@ -108,10 +109,10 @@ if ( ! class_exists( 'NodeBB') ) {
             //     "domain": "test1.openmy.info"
             // }
 
-    # node app.js \
-    #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
-    #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
-    #      || (echo "Unable to install nodebb" && exit 1)
+    // # node app.js \
+    // #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
+    // #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
+    // #      || (echo "Unable to install nodebb" && exit 1)
             // --setup "{\"admin:username\":\"nbbadmin\",\"admin:password\":\"nbbpassword\",\"admin:password:confirm\":\"nbbpassword\",\"admin:email\":\"steveorevo@gmail.com\"}"
             
             return $args;
