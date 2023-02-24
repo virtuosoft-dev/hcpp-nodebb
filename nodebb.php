@@ -90,13 +90,13 @@ if ( ! class_exists( 'NodeBB') ) {
             // Cleanup, allocate ports, prepare nginx and start services
             $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
             $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
-            $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
-            $hcpp->nodeapp->startup_apps( $nodeapp_folder );
 
             // Update proxy and restart nginx
             if ( $nodeapp_folder . '/' == $nodebb_folder ) {
                 $hcpp->run( "change-web-domain-proxy-tpl $user $domain NodeApp" );
             }else{
+                $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
+                $hcpp->nodeapp->startup_apps( $nodeapp_folder );
                 $hcpp->run( "restart-proxy" );
             }
             
