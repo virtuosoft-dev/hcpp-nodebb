@@ -93,6 +93,13 @@ if ( ! class_exists( 'NodeBB') ) {
             $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
             $hcpp->nodeapp->startup_apps( $nodeapp_folder );
 
+            // Update proxy and restart nginx
+            if ( $nodeapp_folder . '/' == $nodebb_folder ) {
+                $hcpp->run( "change-web-domain-proxy-tpl $user $domain NodeApp" );
+            }else{
+                $hcpp->run( "restart-proxy" );
+            }
+            
             // $hcpp->log( $options );
 
             // 19:17:50.49 "NodeBB: Installing NodeBB"
