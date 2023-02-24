@@ -81,14 +81,6 @@ if ( ! class_exists( 'NodeBB') ) {
             $config = str_replace( '%database_password%', $options['database_password'], $config );
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
-            // Run initial setup
-            chmod( $nodebb_folder . '/nodebb', 0750 );
-            $cmd = 'runuser -l ' . $user . ' -c "cd \"' . $nodebb_folder . '\" && ./nodebb setup ';
-            $cmd .= '"{\"admin:username\":\"' . $options['nodebb_username'] . '\",\"admin:password\":\"' . $options['nodebb_password'];
-            $cmd .= '\",\"admin:password:confirm\":\"' . $options['nodebb_password']. '\",\"admin:email\":\"' . $options['nodebb_email'] . '\"}"';
-            $hcpp->log( $cmd );
-            shell_exec( $cmd );
-
             // Cleanup, allocate ports, prepare nginx and start services
             $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
             $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
@@ -101,6 +93,20 @@ if ( ! class_exists( 'NodeBB') ) {
                 $hcpp->nodeapp->startup_apps( $nodeapp_folder );
                 $hcpp->run( "restart-proxy" );
             }
+
+            // Run initial setup
+            chmod( $nodebb_folder . '/nodebb', 0750 );
+            $cmd = 'runuser -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && ./nodebb setup ';
+            $cmd .= "'" . addslashes( 
+                json_encode( [
+                    "admin:username" => $options['nodebb_username'],
+                    "admin:password" => $options['nodebb_password'],
+                    "admin:password:confirm" => $options['nodebb_password'],
+                    "admin:email" => $options['nodebb_email']
+                ] )
+            ) . "'\"";
+            $hcpp->log( $cmd );
+            shell_exec( $cmd );
             
             // $hcpp->log( $options );
 
