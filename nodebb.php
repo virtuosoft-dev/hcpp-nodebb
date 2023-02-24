@@ -68,19 +68,10 @@ if ( ! class_exists( 'NodeBB') ) {
             // Copy over nodebb core files
             $opt_nodebb = '/opt/nodebb/v2.8.6/nodebb';
             $hcpp->nodeapp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
-            // if (is_dir($opt_nodebb)) {
-            //     $files = scandir($opt_nodebb);
-
-            //     foreach ($files as $file) {
-            //         if ($file != '.' && $file != '..' && $file != 'node_modules') {
-            //             $hcpp->nodeapp->copy_folder( $opt_nodebb . '/' . $file, $nodebb_folder . '/' . $file, $user );
-            //         }
-            //     }
-            // }
             
             // Copy over nodebb config files
             $hcpp->nodeapp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
-            
+
             // Fill out config.json
             $nodebb_secret = bin2hex(openssl_random_pseudo_bytes(16));
             $config = file_get_contents( $nodebb_folder . '/config.json' );
@@ -92,6 +83,15 @@ if ( ! class_exists( 'NodeBB') ) {
 
             // Run initial setup
             chmod( $nodebb_folder . '/nodebb', 0750 );
+            $cmd = 'runuser -l ' . $user . ' -c "cd \"' . $nodebb_folder . '\" && ./nodebb setup ';
+            $cmd .= '"{\"admin:username\":\"' . $options['nodebb_username'] . '\",\"admin:password\":\"' . $options['nodebb_password'];
+            $cmd .= '\",\"admin:password:confirm\":\"' . $options['nodebb_password']. '\",\"admin:email\":\"' . $options['nodebb_email'] . '\"}"';
+
+            // Cleanup, allocate ports, prepare nginx and start services
+            $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
+            $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
+            $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
+            $hcpp->nodeapp->startup_apps( $nodeapp_folder );
 
             // $hcpp->log( $options );
 

@@ -8,5 +8,7 @@
         "password": "%database_password%",
         "database": "%database_name%",
         "ssl": "false"
-    }
+    },
+    "url": "http://localhost:%nodebb_port%/",
+    "port": %nodebb_port%
 }
