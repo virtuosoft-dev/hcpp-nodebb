@@ -86,6 +86,8 @@ if ( ! class_exists( 'NodeBB') ) {
             $cmd = 'runuser -l ' . $user . ' -c "cd \"' . $nodebb_folder . '\" && ./nodebb setup ';
             $cmd .= '"{\"admin:username\":\"' . $options['nodebb_username'] . '\",\"admin:password\":\"' . $options['nodebb_password'];
             $cmd .= '\",\"admin:password:confirm\":\"' . $options['nodebb_password']. '\",\"admin:email\":\"' . $options['nodebb_email'] . '\"}"';
+            $hcpp->log( $cmd );
+            shell_exec( $cmd );
 
             // Cleanup, allocate ports, prepare nginx and start services
             $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
