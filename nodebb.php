@@ -85,6 +85,8 @@ if ( ! class_exists( 'NodeBB') ) {
             $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
             $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
 
+            return $args;
+
             // Run initial setup
             chmod( $nodebb_folder . '/nodebb', 0750 );
             $cmd = 'runuser -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && ./nodebb setup ';
@@ -98,7 +100,7 @@ if ( ! class_exists( 'NodeBB') ) {
             ) . "'\"";
             $hcpp->log( $cmd );
             shell_exec( $cmd );
-            
+
             // Update proxy and restart nginx
             if ( $nodeapp_folder . '/' == $nodebb_folder ) {
                 $hcpp->run( "change-web-domain-proxy-tpl $user $domain NodeApp" );
