@@ -70,11 +70,6 @@ if ( ! class_exists( 'NodeBB') ) {
             $hcpp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
             
             // Copy over nodebb config files
-            // TODO: optimize; use OS calls to copy folder and re-assign ownership
-            // Restore executable bit for shebang files:
-            // find /opt/nodebb/v2.8.6/nodebb -type f -executable -exec sh -c 'head -n 1 "$1" | grep -q "^#!" ' sh {} \; -print
-            // and chmod +x the found files but in our copy path;
-            // Or simply chmod -R +x ./node_modules
             $hcpp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
 
             // Fill out config.json
