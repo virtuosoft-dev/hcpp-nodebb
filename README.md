@@ -24,7 +24,7 @@ git clone https://github.com/steveorevo/hestiacp-nodebb nodebb
 
 Note: It is important that the destination plugin folder name is `nodebb`.
 
-Be sure to logout and login again to your Hestia Control Panel; the plugin will immediately start installing NodeJS and NodeBB depedencies in the background. A notification will appear under the admin user account indicating *"NodeBB plugin has finished installing"* when complete. This may take awhile before the options appear in Hestia. You can force manual installation via root level SSH:
+Be sure to logout and login again to your Hestia Control Panel as the admin user or, as admin, visit Server (gear icon) -> Configure -> Plugins -> Save; the plugin will immediately start installing NodeJS and NodeBB depedencies in the background. A notification will appear under the admin user account indicating *"NodeBB plugin has finished installing"* when complete. This may take awhile before the options appear in Hestia. You can force manual installation via root level SSH:
 
 ```
 sudo -s
