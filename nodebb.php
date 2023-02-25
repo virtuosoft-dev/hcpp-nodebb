@@ -140,11 +140,19 @@ if ( ! class_exists( 'NodeBB') ) {
             global $hcpp;
             if ( strpos( $_SERVER['REQUEST_URI'], '/add/webapp/?app=NodeBB&' ) === false ) return $args;
             $content = $args['content'];
-        
+            $user = trim($args['user'], "'");
+            $shell = $hcpp->run( "list-user $user json")[$user]['SHELL'];
+
             // Suppress Data loss alert, and PHP version selector
-            $content = '<style>.alert.alert-info.alert-with-icon{display:none;}</style>' . $content;
-        
-            if ( !is_dir('/usr/local/hestia/plugins/nodeapp') ) {
+            $content = '<style>.form-group:last-of-type,.alert.alert-info.alert-with-icon{display:none;}</style>' . $content;
+            if ( $shell != '/bin/bash' ) {
+
+                // Display bash requirement
+                $content = '<style>.form-group{display:none;}</style>' . $content;
+                $msg = '<div style="margin-top:-20px;width:75%;"><span>';
+                $msg .= 'Cannot contiue. User "' . $user . '" must have bash login ability.</span>';
+                $msg .= '<script>$(function(){$(".l-unit-toolbar__buttonstrip.float-right a").css("display", "none");});</script>';
+            }elseif ( !is_dir('/usr/local/hestia/plugins/nodeapp') ) {
         
                 // Display missing nodeapp requirement
                 $content = '<style>.form-group{display:none;}</style>' . $content;
