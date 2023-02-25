@@ -49,7 +49,6 @@ if ( ! class_exists( 'NodeBB') ) {
 
             if ( $args[0] != 'nodebb_install' ) return $args;
             global $hcpp;
-            // $hcpp->log( "NodeBB: Installing NodeBB" );
             $options = json_decode( $args[1], true );
             $user = $options['user'];
             $domain = $options['domain'];
@@ -59,11 +58,6 @@ if ( ! class_exists( 'NodeBB') ) {
             if ( $nodebb_folder == '' || $nodebb_folder[0] != '/' ) $nodebb_folder = '/' . $nodebb_folder;
             $nodeapp_folder = "/home/$user/web/$domain/nodeapp";
             $nodebb_folder = $nodeapp_folder . $nodebb_folder;
-
-            // Create the nodeapp folder 
-            $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " && ";
-            $cmd .= "chown -R $user:$user " . escapeshellarg( $nodeapp_folder );
-            shell_exec( $cmd );
 
             // Copy over nodebb core files
             $opt_nodebb = '/opt/nodebb/v2.8.6/nodebb';
