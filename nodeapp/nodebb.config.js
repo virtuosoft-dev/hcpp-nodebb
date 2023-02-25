@@ -5,6 +5,39 @@ module.exports = {
         let app = __filename.split('/').pop().replace('.config.js', '');
         let domain = __dirname.split('/')[4];
         let user = __dirname.split('/')[2];
+
+        /**
+         * Update the allocated port number and url in nodebb's config.json file.
+         * 
+         * The port number is read from a file in /usr/local/hestia/data/hcpp/ports/%username%/%domain%.ports.
+         */
+
+        let port = 0;
+        let file = '/usr/local/hestia/data/hcpp/ports/' + user + '/' + domain + '.ports';
+        const fs = require('fs');
+        let ports = fs.readFileSync(file, {encoding:'utf8', flag:'r'});
+        ports = ports.split(/\r?\n/);
+        for( let i = 0; i < ports.length; i++) {
+            if (ports[i].indexOf(app + '_port') > -1) {
+                port = ports[i];
+                break;
+            }
+        }
+        port = parseInt(port.trim().split(' ').pop());
+        let root = __dirname.replace(/.*\/nodeapp/, '').trim();
+        if (!root.startsWith('/')) root = '/' + root;
+
+        // Read the config.json file synchronously
+        const config = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
+
+        // Update the url and port properties
+        config.url = 'http://localhost:' + port + root;
+        config.port = port;
+
+        // Write the updated config object back to the file
+        fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
+
+        // Return the pm2 configuration
         return [{
             name: app + '-' + domain,
             script: 'nodebb_pm2.js',
@@ -32,39 +65,6 @@ module.exports = {
                     return ver;
                 }
             })(),       
-            args: (function() {
-                /**
-                 * Update the allocated port number and url in nodebb's config.json file.
-                 * 
-                 * The port number is read from a file in /usr/local/hestia/data/hcpp/ports/%username%/%domain%.ports.
-                 */
-
-                let port = 0;
-                let file = '/usr/local/hestia/data/hcpp/ports/' + user + '/' + domain + '.ports';
-                const fs = require('fs');
-                let ports = fs.readFileSync(file, {encoding:'utf8', flag:'r'});
-                ports = ports.split(/\r?\n/);
-                for( let i = 0; i < ports.length; i++) {
-                    if (ports[i].indexOf(app + '_port') > -1) {
-                        port = ports[i];
-                        break;
-                    }
-                }
-                port = parseInt(port.trim().split(' ').pop());
-                let root = __dirname.replace(/.*\/nodeapp/, '').trim();
-                if (!root.startsWith('/')) root = '/' + root;
-
-                // Read the config.json file synchronously
-                const config = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
-
-                // Update the url and port properties
-                config.url = 'http://localhost:' + port + root;
-                config.port = port;
-
-                // Write the updated config object back to the file
-                fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
-                return '';
-            })(),
             watch: ['.restart'],
             ignore_watch: [],
             watch_delay: 5000,

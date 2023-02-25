@@ -10,5 +10,5 @@
         "ssl": "false"
     },
     "url": "http://localhost:%nodebb_port%/",
-    "port": %nodebb_port%
+    "port": "%nodebb_port%"
 }

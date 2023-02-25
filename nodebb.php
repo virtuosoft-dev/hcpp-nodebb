@@ -66,6 +66,13 @@ if ( ! class_exists( 'NodeBB') ) {
             // Copy over nodebb config files
             $hcpp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
 
+            // Cleanup, allocate ports, prepare nginx and start services
+            $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
+            $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
+            $port = file_get_contents( "/usr/local/hestia/data/hcpp/ports/$user/$domain.ports" );
+            $port = $hcpp->delLeftMost( $port, '$nodebb_port ' );
+            $port = $hcpp->getLeftMost( $port, ';' );
+
             // Fill out config.json
             $nodebb_secret = bin2hex(openssl_random_pseudo_bytes(16));
             $config = file_get_contents( $nodebb_folder . '/config.json' );
@@ -73,11 +80,9 @@ if ( ! class_exists( 'NodeBB') ) {
             $config = str_replace( '%database_name%', $user . '_' . $options['database_name'], $config );
             $config = str_replace( '%database_user%', $user . '_' . $options['database_user'], $config );
             $config = str_replace( '%database_password%', $options['database_password'], $config );
-            file_put_contents( $nodebb_folder . '/config.json', $config );
+            $config = str_replace( '%nodebb_port%', $port, $config );
 
-            // Cleanup, allocate ports, prepare nginx and start services
-            $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
-            $hcpp->nodeapp->allocate_ports( $nodeapp_folder );
+            file_put_contents( $nodebb_folder . '/config.json', $config );
 
             // Run initial setup
             chmod( $nodebb_folder . '/nodebb', 0750 );
