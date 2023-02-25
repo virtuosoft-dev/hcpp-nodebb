@@ -1,8 +1,6 @@
 # hestiacp-nodebb
 A plugin for Hestia Control Panel (via hestiacp-pluginable) that enables hosting a NodeBB instance.
-With this plugin installed, user accounts can host their own NodeBB instance either in the root domain
-or as a subfolder installation. For instance, it is possible to run WordPress in the root domain while
-having NodeBB installed on the same domain in a subfolder (i.e. https://example.com/nodebb-forum).
+With this plugin installed, a new Quick Installer option will appear. User accounts can host their own NodeBB instance either in the root domain or as a subfolder installation. For instance, it is possible to run WordPress in the root domain while having NodeBB installed on the same domain in a subfolder (i.e. https://example.com/nodebb-forum).
 
 &nbsp;
 > :warning: !!! Note: this repo is in progress; when completed, a release will appear in the release tab.
