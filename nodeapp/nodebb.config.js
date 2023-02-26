@@ -35,7 +35,7 @@ module.exports = {
         config.port = port;
 
         // Write the updated config object back to the file
-        fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
+        fs.writeFileSync(__dirname + '/config.json', JSON.stringify(config, null, 2));
 
         // Return the pm2 configuration
         return [{
