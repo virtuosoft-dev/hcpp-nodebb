@@ -12,12 +12,12 @@
 if ( ! class_exists( 'NodeBB') ) {
     class NodeBB {
         /**
-         * Constructor, listen for the priv_change_web_domain_proxy_tpl event
+         * Constructor, listen for the invoke, POST, and render events
          */
         public function __construct() {
             global $hcpp;
             $hcpp->nodebb = $this;
-            $hcpp->add_action( 'csrf_verified', [ $this, 'csrf_verified' ] );
+            $hcpp->add_action( 'csrf_verified', [ $this, 'csrf_verified' ] ); // Initial POST
             $hcpp->add_action( 'invoke_plugin', [ $this, 'setup' ] );
             $hcpp->add_action( 'priv_add_database', [ $this, 'priv_add_database' ] );
             $hcpp->add_action( 'render_page', [ $this, 'render_page' ] );
@@ -46,7 +46,6 @@ if ( ! class_exists( 'NodeBB') ) {
 
         // Setup NodeBB with the given user options
         public function setup( $args ) {
-
             if ( $args[0] != 'nodebb_install' ) return $args;
             global $hcpp;
             $options = json_decode( $args[1], true );
@@ -128,12 +127,7 @@ if ( ! class_exists( 'NodeBB') ) {
             //     "domain": "test1.openmy.info"
             // }
 
-    // # node app.js \
-    // #     --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" \
-    // #     --defaultPlugins "[\"nodebb-plugin-custom-homepage\", \"nodebb-plugin-custom-pages\", \"nodebb-plugin-dbsearch\", \"nodebb-plugin-emoji\", \"nodebb-plugin-emoji-android\", \"nodebb-plugin-emoji-extended\", \"nodebb-plugin-emoji-one\", \"nodebb-plugin-markdown\", \"nodebb-plugin-mentions\", \"nodebb-plugin-ns-embed\", \"nodebb-plugin-soundpack-default\", \"nodebb-plugin-spam-be-gone\", \"nodebb-rewards-essentials\", \"nodebb-theme-vanilla\", \"nodebb-widget-essentials\"${modulesToActivate}]" \
-    // #      || (echo "Unable to install nodebb" && exit 1)
-            // --setup "{\"admin:username\":\"nbbadmin\",\"admin:password\":\"nbbpassword\",\"admin:password:confirm\":\"nbbpassword\",\"admin:email\":\"steveorevo@gmail.com\"}"
-            
+
             return $args;
         }
 
