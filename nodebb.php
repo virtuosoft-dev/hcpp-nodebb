@@ -18,7 +18,7 @@ if ( ! class_exists( 'NodeBB') ) {
             global $hcpp;
             $hcpp->nodebb = $this;
             $hcpp->add_action( 'csrf_verified', [ $this, 'csrf_verified' ] );
-            $hcpp->add_action( 'invoke_plugin', [ $this, 'invoke_plugin' ] );
+            $hcpp->add_action( 'invoke_plugin', [ $this, 'setup' ] );
             $hcpp->add_action( 'priv_add_database', [ $this, 'priv_add_database' ] );
             $hcpp->add_action( 'render_page', [ $this, 'render_page' ] );
         }
@@ -44,8 +44,8 @@ if ( ! class_exists( 'NodeBB') ) {
             return $args;
         }
 
-        // Install NodeBB with the given user options
-        public function invoke_plugin( $args ) {
+        // Setup NodeBB with the given user options
+        public function setup( $args ) {
 
             if ( $args[0] != 'nodebb_install' ) return $args;
             global $hcpp;
