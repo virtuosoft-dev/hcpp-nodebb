@@ -27,11 +27,21 @@ module.exports = {
         let root = __dirname.replace(/.*\/nodeapp/, '').trim();
         if (!root.startsWith('/')) root = '/' + root;
 
+        // Check for SSL
+        let url = 'http://';
+        let sslPath = '/home/' + user + '/conf/web/' + domain + '/ssl';
+        if (fs.existsSync(sslPath)) {
+            if (fs.readdirSync(sslPath).length !== 0) {
+                url = 'https://';
+            }
+        }
+        url += domain + root;
+
         // Read the config.json file synchronously
         const config = JSON.parse(fs.readFileSync(__dirname + '/config.json'));
 
         // Update the url and port properties
-        config.url = 'http://localhost:' + port + root;
+        config.url = url;
         config.port = port;
 
         // Write the updated config object back to the file

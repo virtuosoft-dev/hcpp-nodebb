@@ -9,6 +9,6 @@
         "database": "%database_name%",
         "ssl": "false"
     },
-    "url": "http://localhost:%nodebb_port%/",
+    "url": "http://%nodebb_url%/",
     "port": "%nodebb_port%"
 }

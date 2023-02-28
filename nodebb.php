@@ -56,6 +56,7 @@ if ( ! class_exists( 'NodeBB') ) {
             $nodebb_folder = $options['nodebb_folder'];
             if ( $nodebb_folder == '' || $nodebb_folder[0] != '/' ) $nodebb_folder = '/' . $nodebb_folder;
             $nodeapp_folder = "/home/$user/web/$domain/nodeapp";
+            $subfolder = $nodebb_folder;
             $nodebb_folder = $nodeapp_folder . $nodebb_folder;
 
             // Create the nodeapp folder 
@@ -85,6 +86,11 @@ if ( ! class_exists( 'NodeBB') ) {
             $config = str_replace( '%database_user%', $user . '_' . $options['database_user'], $config );
             $config = str_replace( '%database_password%', $options['database_password'], $config );
             $config = str_replace( '%nodebb_port%', $port, $config );
+            $url = "http://$domain" . $subfolder;
+            if ( is_dir( "/home/$user/conf/web/$domain/ssl") ) {
+                $url = "https://$domain" . $subfolder;
+            }
+            $config = str_replace( '%nodebb_url%', $url, $config );
 
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
