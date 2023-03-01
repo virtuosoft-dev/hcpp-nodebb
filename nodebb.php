@@ -116,24 +116,6 @@ if ( ! class_exists( 'NodeBB') ) {
                 $hcpp->nodeapp->startup_apps( $nodeapp_folder );
                 $hcpp->run( "restart-proxy" );
             }
-            
-            // $hcpp->log( $options );
-
-            // 19:17:50.49 "NodeBB: Installing NodeBB"
-            // 19:17:50.49 {
-            //     "nodebb_username": "nbbadmin",
-            //     "nodebb_password": "nbpassword",
-            //     "nodebb_folder": "",
-            //     "php_version": "7.3",
-            //     "database_create": "true",
-            //     "database_name": "28605",
-            //     "database_user": "28605",
-            //     "database_password": "d69c24e6d72067c1fc8c",
-            //     "user": "homestead",
-            //     "domain": "test1.openmy.info"
-            // }
-
-
             return $args;
         }
 
