@@ -8,9 +8,9 @@ export DEBIAN_FRONTEND=noninteractive
 dir=$PWD
 if [ ! -d "/opt/nodebb/v2.8.6" ]; then
 
-    mkdir -p /opt/nodebb/v2.8.6
-    cd /opt/nodebb/v2.8.6
-    git clone -b v2.8.6 https://github.com/NodeBB/NodeBB.git nodebb
+    mkdir -p /opt/nodebb/v2.8.7
+    cd /opt/nodebb/v2.8.7
+    git clone -b v2.8.7 https://github.com/NodeBB/NodeBB.git nodebb
     cd nodebb
     ./nodebb setup --help
 fi
