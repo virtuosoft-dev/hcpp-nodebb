@@ -1,5 +1,7 @@
+/**
+ * Our shim for nodebb production mode and PM2 compatibility.
+ */
 const { exec } = require('child_process');
-
 const startCmd = './nodebb start';
 const stopCmd = './nodebb stop';
 

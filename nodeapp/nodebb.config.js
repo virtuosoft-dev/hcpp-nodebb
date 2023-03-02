@@ -27,10 +27,9 @@ module.exports = {
         fs.writeFileSync(__dirname + '/config.json', JSON.stringify(config, null, 2));
 
         // Update the script based on the mode (production or debug)
+        // Note: debug mode bypasses nodebb and doesn't support dynamic restarts
         if (nodeapp.hasOwnProperty('_debugPort')) {
             nodeapp.script = 'app.js';
-        }else{
-            nodeapp.script = 'nodebb_pm2.js';
         }
         return [nodeapp];
     })()
