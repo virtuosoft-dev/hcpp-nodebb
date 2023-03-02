@@ -6,7 +6,7 @@ export DEBIAN_FRONTEND=noninteractive
 ############################################
 
 dir=$PWD
-if [ ! -d "/opt/nodebb/v2.8.6" ]; then
+if [ ! -d "/opt/nodebb/v2.8.7" ]; then
 
     mkdir -p /opt/nodebb/v2.8.7
     cd /opt/nodebb/v2.8.7
