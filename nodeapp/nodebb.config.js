@@ -5,6 +5,7 @@ module.exports = {
         // Load default PM2 compatible nodeapp configuration.
         let nodeapp = require('/usr/local/hestia/plugins/nodeapp/nodeapp.js')(__filename);
         let domain = nodeapp._domain;
+        let user = nodeapp._user;
 
         // Get url, account for SSL, subfolder
         let root = __dirname.replace(/.*\/nodeapp/, '').trim();
