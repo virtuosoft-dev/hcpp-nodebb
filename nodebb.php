@@ -147,9 +147,9 @@ if ( ! class_exists( 'NodeBB') ) {
         
                 // Display install information
                 $msg = '<div style="margin-top:-20px;width:75%;"><span>';
-                $msg .= 'The NodeBB forum lives inside the "nodeapp" folder (adjacent to "public_html"). ';
-                $msg .= 'It can be a standalone instance in the domain root, or in a subfolder using the ';
-                $msg .= '<b>Install Directory</b> field below.</span><br><span style="font-style:italic;color:darkorange;">';
+                $msg .= 'Please be patient; NodeBB takes at least <b>2 minutes</b> to complete install! The NodeBB forum lives ';
+                $msg .= 'inside the "nodeapp" folder (adjacent to "public_html"). It can be a standalone instance in the domain root, or in a ';
+                $msg .= 'subfolder using the <b>Install Directory</b> field below.</span><br><span style="font-style:italic;color:darkorange;">';
                 $msg .= 'Files will be overwritten; be sure the specified <span style="font-weight:bold">Install Directory</span> is empty!</span></div><br>';
                 
                 // Enforce username and password, remove PHP version
