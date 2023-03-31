@@ -122,7 +122,7 @@ if ( ! class_exists( 'NodeBB') ) {
         // Customize the install page
         public function render_page( $args ) {
             global $hcpp;
-            if ( strpos( $_SERVER['REQUEST_URI'], '/add/webapp/?app=NodeBB&' ) === false ) return $args;
+            if ( false === (strpos( $_SERVER['REQUEST_URI'], '?app=NodeBB' ) !== false && $args['page'] == 'setup_webapp' ) ) return $args;
             $content = $args['content'];
             $user = trim($args['user'], "'");
             $shell = $hcpp->run( "list-user $user json")[$user]['SHELL'];
@@ -155,7 +155,7 @@ if ( ! class_exists( 'NodeBB') ) {
                 // Enforce username and password, remove PHP version
                 $msg .= '
                 <script>
-                    $(function() {
+                    document.addEventListener("DOMContentLoaded", function() {
                         $("label[for=webapp_php_version]").parent().css("display", "none");
                         let borderColor = $("#webapp_nodebb_username").css("border-color");
                         let toolbar = $(".l-center.edit").html();
