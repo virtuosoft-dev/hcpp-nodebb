@@ -12,6 +12,9 @@ if [ ! -d "/opt/nodebb/v2.8.10" ]; then
     cd /opt/nodebb/v2.8.10
     git clone -b v2.8.10 https://github.com/NodeBB/NodeBB.git nodebb
     cd nodebb
+    rm -rf .git
+    rm -rf .gitignore
+    rm -rf .DS_Store
     ./nodebb setup --help
 fi
 
