@@ -1,8 +1,10 @@
 <?php
 /**
  * Plugin Name: NodeBB
- * Plugin URI: https://github.com/steveorevo/hestiacp-nodebb
+ * Plugin URI: https://github.com/virtuosoft-dev/hcpp-nodebb
  * Description: NodeBB is a plugin for HestiaCP that allows you to Quick Install a NodeBB instance.
+ * Version: 1.0.0
+ * Author: Stephen J. Carnam
  */
 
 // Register the install and uninstall scripts
