@@ -5,7 +5,7 @@
  * 
  * @version 1.0.0
  * @license GPL-3.0
- * @link https://github.com/steveorevo/hestiacp-nodebb
+ * @link https://github.com/virtuosoft-dev/hcpp-nodebb
  * 
  */
 
@@ -65,7 +65,7 @@ if ( ! class_exists( 'NodeBB') ) {
             shell_exec( $cmd );
 
             // Copy over nodebb core files
-            $opt_nodebb = '/opt/nodebb/v2.8.10/nodebb';
+            $opt_nodebb = '/opt/nodebb/v3.1.4/nodebb';
             $hcpp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
             
             // Copy over nodebb config files
