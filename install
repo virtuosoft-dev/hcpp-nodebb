@@ -6,11 +6,11 @@ export DEBIAN_FRONTEND=noninteractive
 ############################################
 
 dir=$PWD
-if [ ! -d "/opt/nodebb/v2.8.10" ]; then
+if [ ! -d "/opt/nodebb/v3.1.4" ]; then
 
-    mkdir -p /opt/nodebb/v2.8.10
-    cd /opt/nodebb/v2.8.10
-    git clone -b v2.8.10 https://github.com/NodeBB/NodeBB.git nodebb
+    mkdir -p /opt/nodebb/v3.1.4
+    cd /opt/nodebb/v3.1.4
+    git clone -b v3.1.4 https://github.com/NodeBB/NodeBB.git nodebb
     cd nodebb
     rm -rf .git
     rm -rf .gitignore
