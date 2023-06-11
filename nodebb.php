@@ -96,7 +96,7 @@ if ( ! class_exists( 'NodeBB') ) {
 
             // Run initial setup
             chmod( $nodebb_folder . '/nodebb', 0750 );
-            $cmd = 'runuser -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && ./nodebb setup ';
+            $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && ./nodebb setup ';
             $cmd .= "'" . addslashes( 
                 json_encode( [
                     "admin:username" => $options['nodebb_username'],
