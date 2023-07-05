@@ -9,7 +9,7 @@ class NodeBBSetup extends BaseSetup {
 		"name" => "NodeBB",
 		"group" => "forum",
 		"enabled" => true,
-		"version" => "3.1.4",
+		"version" => "3.2.1",
 		"thumbnail" => "nodebb-thumb.png",
 	];
  
