@@ -18,7 +18,7 @@ if ( ! class_exists( 'NodeBB') ) {
             global $hcpp;
             $hcpp->nodebb = $this;
             $hcpp->add_action( 'csrf_verified', [ $this, 'csrf_verified' ] ); // Initial POST
-            $hcpp->add_action( 'invoke_plugin', [ $this, 'setup' ] );
+            $hcpp->add_action( 'hcpp_invoke_plugin', [ $this, 'setup' ] );
             $hcpp->add_action( 'priv_add_database', [ $this, 'priv_add_database' ] );
             $hcpp->add_action( 'render_page', [ $this, 'render_page' ] );
         }
