@@ -65,7 +65,7 @@ if ( ! class_exists( 'NodeBB') ) {
             shell_exec( $cmd );
 
             // Copy over nodebb core files
-            $opt_nodebb = '/opt/nodebb/v3.2.1/nodebb';
+            $opt_nodebb = '/opt/nodebb/v3.2.3/nodebb';
             $hcpp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
             
             // Copy over nodebb config files
