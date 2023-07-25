@@ -17,14 +17,14 @@ if ( ! class_exists( 'NodeBB') ) {
         public function __construct() {
             global $hcpp;
             $hcpp->nodebb = $this;
-            $hcpp->add_action( 'csrf_verified', [ $this, 'csrf_verified' ] ); // Initial POST
+            $hcpp->add_action( 'hcpp_csrf_verified', [ $this, 'hcpp_csrf_verified' ] ); // Initial POST
             $hcpp->add_action( 'hcpp_invoke_plugin', [ $this, 'setup' ] );
             $hcpp->add_action( 'priv_add_database', [ $this, 'priv_add_database' ] );
-            $hcpp->add_action( 'render_page', [ $this, 'render_page' ] );
+            $hcpp->add_action( 'hcpp_render_page', [ $this, 'hcpp_render_page' ] );
         }
 
         // Intercept form submission to flag database creation
-        public function csrf_verified() {
+        public function hcpp_csrf_verified() {
             if ( isset( $_REQUEST['app'] ) && $_REQUEST['app'] == 'NodeBB' && isset( $_REQUEST['webapp_database_create'] ) ) {
                 if ( isset( $_SESSION['look'] ) ) {
                     touch( '/tmp/nodebb_pgsql_' . $_SESSION['look'] );
@@ -120,7 +120,7 @@ if ( ! class_exists( 'NodeBB') ) {
         }
 
         // Customize the install page
-        public function render_page( $args ) {
+        public function hcpp_render_page( $args ) {
             global $hcpp;
             if ( $args['page'] !== 'setup_webapp') return $args;
             if ( strpos( $_SERVER['REQUEST_URI'], '?app=NodeBB' ) === false ) return $args;
