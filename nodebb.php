@@ -20,7 +20,7 @@ if ( ! class_exists( 'NodeBB') ) {
             $hcpp->add_action( 'hcpp_csrf_verified', [ $this, 'hcpp_csrf_verified' ] ); // Initial POST
             $hcpp->add_action( 'hcpp_invoke_plugin', [ $this, 'setup' ] );
             $hcpp->add_action( 'priv_add_database', [ $this, 'priv_add_database' ] );
-            $hcpp->add_action( 'hcpp_render_page', [ $this, 'hcpp_render_page' ] );
+            $hcpp->add_action( 'hcpp_render_body', [ $this, 'hcpp_render_body' ] );
         }
 
         // Intercept form submission to flag database creation
@@ -120,7 +120,7 @@ if ( ! class_exists( 'NodeBB') ) {
         }
 
         // Customize the install page
-        public function hcpp_render_page( $args ) {
+        public function hcpp_render_body( $args ) {
             global $hcpp;
             if ( $args['page'] !== 'setup_webapp') return $args;
             if ( strpos( $_SERVER['REQUEST_URI'], '?app=NodeBB' ) === false ) return $args;
