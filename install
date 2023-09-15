@@ -6,12 +6,12 @@ export DEBIAN_FRONTEND=noninteractive
 ############################################
 
 dir=$PWD
-source ./nodebb_version.sh
-if [ ! -d "/opt/nodebb/v$node_version" ]; then
+source "$dir/nodebb_version.sh"
+if [ ! -d "/opt/nodebb/v$nodebb_version" ]; then
 
-    mkdir -p /opt/nodebb/v$node_version
-    cd /opt/nodebb/v$node_version
-    git clone -b v$node_version https://github.com/NodeBB/NodeBB.git nodebb
+    mkdir -p "/opt/nodebb/v$nodebb_version"
+    cd "/opt/nodebb/v$nodebb_version"
+    git clone -b "v$nodebb_version" https://github.com/NodeBB/NodeBB.git nodebb
     cd nodebb
     rm -rf .git
     rm -rf .gitignore
@@ -20,7 +20,7 @@ if [ ! -d "/opt/nodebb/v$node_version" ]; then
 fi
 
 # Copy over our Quick Install App
-cd $dir
+cd "$dir"
 rsync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
 
 # Notify installation has finished
