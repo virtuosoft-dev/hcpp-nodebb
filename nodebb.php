@@ -27,7 +27,7 @@ if ( ! class_exists( 'NodeBB') ) {
         public function hcpp_csrf_verified() {
             if ( isset( $_REQUEST['app'] ) && $_REQUEST['app'] == 'NodeBB' && isset( $_REQUEST['webapp_database_create'] ) ) {
                 $dbuser = $_SESSION['user'];
-                if ( isset( $_SESSION['look'] ) ) $dbuser = $_SESSION['look'];
+                if ( isset( $_SESSION['look'] ) && trim( $_SESSION['lool'] ) != "" ) $dbuser = $_SESSION['look'];
                 touch( '/tmp/nodebb_pgsql_' . $dbuser );
             }
         }
