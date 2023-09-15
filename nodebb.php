@@ -94,22 +94,23 @@ if ( ! class_exists( 'NodeBB') ) {
                 $url = "https://$domain" . $subfolder;
             }
             $config = str_replace( '%nodebb_url%', $url, $config );
-
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
             // Run initial setup
-            chmod( $nodebb_folder . '/nodebb', 0750 );
-            $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && ./nodebb setup ';
-            $cmd .= "'" . addslashes( 
+            $setup = './nodebb setup ';
+            $setup .= "'" . addslashes( 
                 json_encode( [
                     "admin:username" => $options['nodebb_username'],
                     "admin:password" => $options['nodebb_password'],
                     "admin:password:confirm" => $options['nodebb_password'],
                     "admin:email" => $options['nodebb_email']
                 ] )
-            ) . "'\"";
+            ) . "'";
+            file_put_contents( $nodebb_folder . '/setup.sh', $setup );
+            $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
+            $cmd .= 'rm ' . $nodebb_folder . '/setup.sh';
             $hcpp->log( $cmd );
-            shell_exec( $cmd );
+            $hcpp->log(shell_exec( $cmd ));
 
             // Update proxy and restart nginx
             if ( $nodeapp_folder . '/' == $nodebb_folder ) {
