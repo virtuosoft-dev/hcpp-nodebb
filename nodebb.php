@@ -104,7 +104,8 @@ if ( ! class_exists( 'NodeBB') ) {
                     "admin:password" => $options['nodebb_password'],
                     "admin:password:confirm" => $options['nodebb_password'],
                     "admin:email" => $options['nodebb_email']
-                ] ) . "'";
+                ] ) . "'\n";
+            $setup .= "./nodebb stop && ./nodebb start\n";
             file_put_contents( $nodebb_folder . '/setup.sh', $setup );
             $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
             $cmd .= '#rm -f ' . $nodebb_folder . 'setup.sh';
