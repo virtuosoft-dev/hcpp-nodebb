@@ -98,14 +98,13 @@ if ( ! class_exists( 'NodeBB') ) {
 
             // Run initial setup
             $setup = './nodebb setup ';
-            $setup .= "'" . addslashes( 
+            $setup .= "'" .  
                 json_encode( [
                     "admin:username" => $options['nodebb_username'],
                     "admin:password" => $options['nodebb_password'],
                     "admin:password:confirm" => $options['nodebb_password'],
                     "admin:email" => $options['nodebb_email']
-                ] )
-            ) . "'";
+                ] ) . "'";
             file_put_contents( $nodebb_folder . '/setup.sh', $setup );
             $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
             $cmd .= '#rm -f ' . $nodebb_folder . 'setup.sh';
