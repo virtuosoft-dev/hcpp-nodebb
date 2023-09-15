@@ -108,8 +108,7 @@ if ( ! class_exists( 'NodeBB') ) {
             $setup .= "./nodebb restart\n";
             file_put_contents( $nodebb_folder . '/setup.sh', $setup );
             $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "export NVM_DIR=/opt/nvm && source /opt/nvm/nvm.sh && ';
-            $cmd .= 'cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
-            $cmd .= '#rm -f ' . $nodebb_folder . 'setup.sh';
+            $cmd .= 'cd ' . $nodebb_folder . ' && source setup.sh && rm -f ./setup.sh"' . "\n";
             $hcpp->log( $cmd );
             $hcpp->log(shell_exec( $cmd ));
 
