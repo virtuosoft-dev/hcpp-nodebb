@@ -96,6 +96,15 @@ if ( ! class_exists( 'NodeBB') ) {
             $config = str_replace( '%nodebb_url%', $url, $config );
             file_put_contents( $nodebb_folder . '/config.json', $config );
 
+            // Update proxy and restart nginx
+            if ( $nodeapp_folder . '/' == $nodebb_folder ) {
+                $hcpp->run( "change-web-domain-proxy-tpl $user $domain NodeApp" );
+            }else{
+                $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
+                $hcpp->nodeapp->startup_apps( $nodeapp_folder );
+                $hcpp->run( "restart-proxy" );
+            }
+
             // Run initial setup
             $setup = './nodebb setup ';
             $setup .= "'" .  
@@ -105,21 +114,13 @@ if ( ! class_exists( 'NodeBB') ) {
                     "admin:password:confirm" => $options['nodebb_password'],
                     "admin:email" => $options['nodebb_email']
                 ] ) . "'\n";
-            $setup .= "./nodebb stop && ./nodebb start\n";
+            $setup .= "./nodebb restart\n";
             file_put_contents( $nodebb_folder . '/setup.sh', $setup );
             $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
             $cmd .= '#rm -f ' . $nodebb_folder . 'setup.sh';
             $hcpp->log( $cmd );
             $hcpp->log(shell_exec( $cmd ));
-
-            // Update proxy and restart nginx
-            if ( $nodeapp_folder . '/' == $nodebb_folder ) {
-                $hcpp->run( "change-web-domain-proxy-tpl $user $domain NodeApp" );
-            }else{
-                $hcpp->nodeapp->generate_nginx_files( $nodeapp_folder );
-                $hcpp->nodeapp->startup_apps( $nodeapp_folder );
-                $hcpp->run( "restart-proxy" );
-            }
+            
             return $args;
         }
 
