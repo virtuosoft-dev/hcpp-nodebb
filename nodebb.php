@@ -26,9 +26,9 @@ if ( ! class_exists( 'NodeBB') ) {
         // Intercept form submission to flag database creation
         public function hcpp_csrf_verified() {
             if ( isset( $_REQUEST['app'] ) && $_REQUEST['app'] == 'NodeBB' && isset( $_REQUEST['webapp_database_create'] ) ) {
-                if ( isset( $_SESSION['look'] ) ) {
-                    touch( '/tmp/nodebb_pgsql_' . $_SESSION['look'] );
-                }
+                $dbuser = $_SESSION['user'];
+                if ( isset( $_SESSION['look'] ) ) $dbuser = $_SESSION['look'];
+                touch( '/tmp/nodebb_pgsql_' . $dbuser );
             }
         }
 
@@ -65,7 +65,7 @@ if ( ! class_exists( 'NodeBB') ) {
             shell_exec( $cmd );
 
             // Copy over nodebb core files
-            $opt_nodebb = '/opt/nodebb/v3.2.3/nodebb';
+            $opt_nodebb = '/opt/nodebb/v3.4.2/nodebb';
             $hcpp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
             
             // Copy over nodebb config files
@@ -148,7 +148,7 @@ if ( ! class_exists( 'NodeBB') ) {
         
                 // Display install information
                 $msg = '<div style="margin-top:-20px;width:75%;"><span>';
-                $msg .= 'Please be patient; NodeBB takes at least <b>2 minutes</b> to complete install! The NodeBB forum lives ';
+                $msg .= 'Please be patient; NodeBB make take several <b>minutes</b> to complete install! The NodeBB forum lives ';
                 $msg .= 'inside the "nodeapp" folder (adjacent to "public_html"). It can be a standalone instance in the domain root, or in a ';
                 $msg .= 'subfolder using the <b>Install Directory</b> field below.</span><br><span style="font-style:italic;color:darkorange;">';
                 $msg .= 'Files will be overwritten; be sure the specified <span style="font-weight:bold">Install Directory</span> is empty!</span></div><br>';
