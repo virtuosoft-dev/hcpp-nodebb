@@ -13,8 +13,6 @@ if [ ! -d "/opt/nodebb/v$nodebb_version" ]; then
     cd "/opt/nodebb/v$nodebb_version"
     git clone -b "v$nodebb_version" https://github.com/NodeBB/NodeBB.git nodebb
     cd nodebb
-    rm -rf .git
-    rm -rf .gitignore
     rm -rf .DS_Store
     ./nodebb setup --help
 fi
