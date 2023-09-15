@@ -3,16 +3,13 @@
 namespace Hestia\WebApp\Installers\NodeBB;
 use Hestia\WebApp\Installers\BaseSetup as BaseSetup;
 require_once( '/usr/local/hestia/web/pluginable.php' );
-$nodebb_version = file_get_contents( '/usr/local/hestia/plugins/nodebb/nodebb_version.sh' );
-$nodebb_version = str_replace( 'nodebb_version=', "", $nodebb_version );
-$nodebb_version = trim( $nodebb_version, '"' );
 
 class NodeBBSetup extends BaseSetup {
 	protected $appInfo = [
 		"name" => "NodeBB",
 		"group" => "forum",
 		"enabled" => true,
-		"version" => $nodebb_version,
+		"version" => "",
 		"thumbnail" => "nodebb-thumb.png",
 	];
  
@@ -34,6 +31,14 @@ class NodeBBSetup extends BaseSetup {
 			],
 		],
 	];
+
+	public function __construct($domain, $appcontext) {
+		$v = file_get_contents( '/usr/local/hestia/plugins/nodebb/nodebb_version.sh' );
+		$v = str_replace( 'nodebb_version=', "", $v );
+		$v = trim( $v, '"' );
+		$this->appInfo['version'] = $v;
+		parent::__construct($domain, $appcontext);
+	}
 
 	public function install(array $options = null) {
 		global $hcpp;
