@@ -108,7 +108,7 @@ if ( ! class_exists( 'NodeBB') ) {
             ) . "'";
             file_put_contents( $nodebb_folder . '/setup.sh', $setup );
             $cmd = 'runuser -s /bin/bash -l ' . $user . ' -c "cd ' . $nodebb_folder . ' && source setup.sh"' . "\n";
-            $cmd .= 'rm ' . $nodebb_folder . '/setup.sh';
+            $cmd .= '#rm -f ' . $nodebb_folder . 'setup.sh';
             $hcpp->log( $cmd );
             $hcpp->log(shell_exec( $cmd ));
 
