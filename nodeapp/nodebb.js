@@ -2,12 +2,13 @@
  * Our shim for nodebb production mode and PM2 compatibility.
  */
 const { exec } = require('child_process');
-const startCmd = './nodebb start';
-const stopCmd = './nodebb stop';
+const startCmd = 'nodebb start';
+const stopCmd = 'nodebb stop';
+const nvmCmd = 'bash -c "export NVM_DIR=/opt/nvm && source /opt/nvm/nvm.sh && nvm use && ';
 
 const start = () => {
   console.log('Starting nodebb...');
-  exec(startCmd, (error, stdout, stderr) => {
+  exec(nvmCmd + startCmd + '"', (error, stdout, stderr) => {
     if (error) {
       console.error(`Error starting nodebb: ${error}`);
     } else {
@@ -18,7 +19,7 @@ const start = () => {
 
 const stop = () => {
   console.log('Stopping nodebb...');
-  exec(stopCmd, (error, stdout, stderr) => {
+  exec(nvmCmd + stopCmd + '"', (error, stdout, stderr) => {
     if (error) {
       console.error(`Error stopping nodebb: ${error}`);
     } else {
