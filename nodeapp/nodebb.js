@@ -1,14 +1,13 @@
 /**
- * Our shim for nodebb production mode and PM2 compatibility.
+ * Our shim for nodebb and PM2 compatibility.
  */
 const { exec } = require('child_process');
-const startCmd = 'nodebb start';
-const stopCmd = 'nodebb stop';
-const nvmCmd = 'bash -c "export NVM_DIR=/opt/nvm && source /opt/nvm/nvm.sh && nvm use && ';
-
+const startCmd = './nodebb start';
+const stopCmd = './nodebb stop';
+const nvmCmd = 'cd ' + __dirname + ' && export NVM_DIR=/opt/nvm && . /opt/nvm/nvm.sh && nvm use && ';
 const start = () => {
   console.log('Starting nodebb...');
-  exec(nvmCmd + startCmd + '"', (error, stdout, stderr) => {
+  exec(nvmCmd + startCmd, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error starting nodebb: ${error}`);
     } else {
@@ -19,21 +18,22 @@ const start = () => {
 
 const stop = () => {
   console.log('Stopping nodebb...');
-  exec(nvmCmd + stopCmd + '"', (error, stdout, stderr) => {
+  exec(nvmCmd + stopCmd, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error stopping nodebb: ${error}`);
     } else {
       console.log(`nodebb stopped: ${stdout}`);
     }
-    process.exit();
   });
 };
 
 // Start the nodebb process
 start();
 
-// Listen for SIGINT signal
-process.on('SIGINT', () => {
-  console.log('Received SIGINT signal, stopping nodebb...');
-  stop();
+// Listen for custom 'shutdown' message from the parent process
+process.on('message', (message) => {
+  if (message === 'shutdown') {
+    console.log('Received shutdown message, stopping...');
+    stop();
+  }
 });

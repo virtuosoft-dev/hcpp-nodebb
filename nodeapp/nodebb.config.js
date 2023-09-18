@@ -32,6 +32,8 @@ module.exports = {
         if (nodeapp.hasOwnProperty('_debugPort')) {
             nodeapp.script = 'app.js';
         }
+        nodeapp.shutdown_with_message = true;
+        nodeapp.kill_timeout = 3000;
         return [nodeapp];
     })()
 }
