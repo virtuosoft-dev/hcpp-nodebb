@@ -1,1 +1,1 @@
-nodebb_version="3.4.3"
+nodebb_version="3.5.0"
