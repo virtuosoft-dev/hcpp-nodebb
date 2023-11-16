@@ -4,7 +4,7 @@
 const { exec } = require('child_process');
 const startCmd = './nodebb start';
 const stopCmd = './nodebb stop';
-const nvmCmd = 'cd ' + __dirname + ' && export NVM_DIR=/opt/nvm && . /opt/nvm/nvm.sh && nvm use && ';
+const nvmCmd = 'cd ' + __dirname + ' && export NVM_DIR=/opt/nvm && . /opt/nvm/nvm.sh && nvm use v20 && ';
 const start = () => {
   console.log('Starting nodebb...');
   exec(nvmCmd + startCmd, (error, stdout, stderr) => {
