@@ -60,7 +60,8 @@ if ( ! class_exists( 'NodeBB') ) {
             $nodebb_folder = $nodeapp_folder . $nodebb_folder;
 
             // Create the nodeapp folder 
-            $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " && ";
+            $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " ; ";
+            $cmd .= "chmod 751 " . escapeshellarg( $nodeapp_folder ) . " && ";
             $cmd .= "chown -R $user:$user " . escapeshellarg( $nodeapp_folder );
             shell_exec( $cmd );
 
