@@ -61,7 +61,6 @@ if ( ! class_exists( 'NodeBB') ) {
 
             // Create the nodeapp folder 
             $cmd = "mkdir -p " . escapeshellarg( $nodebb_folder ) . " ; ";
-            $cmd .= "chmod 751 " . escapeshellarg( $nodeapp_folder ) . " && ";
             $cmd .= "chown -R $user:$user " . escapeshellarg( $nodeapp_folder );
             shell_exec( $cmd );
 
@@ -74,6 +73,7 @@ if ( ! class_exists( 'NodeBB') ) {
             
             // Copy over nodebb config files
             $hcpp->copy_folder( __DIR__ . '/nodeapp', $nodebb_folder, $user );
+            chmod( $nodeapp_folder, 0751 );
 
             // Cleanup, allocate ports, prepare nginx and start services
             $hcpp->nodeapp->shutdown_apps( $nodeapp_folder );
