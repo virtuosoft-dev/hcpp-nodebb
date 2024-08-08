@@ -65,9 +65,8 @@ if ( ! class_exists( 'NodeBB') ) {
             shell_exec( $cmd );
 
             // Copy over nodebb core files
-            $nodebb_version = file_get_contents( __DIR__ . '/nodebb_version.sh' );
-            $nodebb_version = str_replace( 'nodebb_version=', "", $nodebb_version );
-            $nodebb_version = trim( $nodebb_version, '"' ); 
+            $nodebb_version = trim( file_get_contents( __DIR__ . '/nodebb_version.sh' ) );
+            $nodebb_version = str_replace( ['nodebb_version=', '"'], "", $nodebb_version );
             $opt_nodebb = '/opt/nodebb/v' . $nodebb_version . '/nodebb';
             $hcpp->copy_folder( $opt_nodebb, $nodebb_folder, $user );
             

@@ -33,9 +33,8 @@ class NodeBBSetup extends BaseSetup {
 	];
 
 	public function __construct($domain, $appcontext) {
-		$v = file_get_contents( '/usr/local/hestia/plugins/nodebb/nodebb_version.sh' );
+		$v = trim( file_get_contents( '/usr/local/hestia/plugins/nodebb/nodebb_version.sh' ) );
 		$v = str_replace( ['nodebb_version=', '"'], "", $v );
-		$v = trim( $v, '"' );
 		$this->appInfo['version'] = $v;
 		parent::__construct($domain, $appcontext);
 	}
