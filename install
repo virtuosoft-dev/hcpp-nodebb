@@ -1,25 +1,14 @@
 #!/bin/bash
 export DEBIAN_FRONTEND=noninteractive
+dir=$PWD
 
 ############################################
 # Install NodeBB
 ############################################
-
-dir=$PWD
-source "$dir/nodebb_version.sh"
-if [ ! -d "/opt/nodebb/v$nodebb_version" ]; then
-
-    mkdir -p "/opt/nodebb/v$nodebb_version"
-    cd "/opt/nodebb/v$nodebb_version"
-    git clone -b "v$nodebb_version" https://github.com/NodeBB/NodeBB.git nodebb
-    cd nodebb
-    rm -rf .DS_Store
-    ./nodebb setup --help
-fi
-
 # Copy over our Quick Install App
-cd "$dir"
+cd $dir
 rsync -r ./Installers/ /usr/local/hestia/web/src/app/WebApp/Installers/
+/usr/local/hestia/bin/v-invoke-plugin nodebb_install
 
 # Notify installation has finished
 /usr/local/hestia/bin/v-add-user-notification admin "NodeBB" "&#128153; NodeBB plugin has finished installing."

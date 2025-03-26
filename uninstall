@@ -7,3 +7,4 @@ rm -rf /opt/nodebb
 
 # Remove Quick Install App
 rm -rf /usr/local/hestia/web/src/app/WebApp/Installers/NodeBB
+/usr/local/hestia/bin/v-invoke-plugin nodebb_uninstall
