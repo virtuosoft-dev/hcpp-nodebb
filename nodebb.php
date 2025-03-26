@@ -139,7 +139,7 @@ if ( ! class_exists( 'NodeBB') ) {
                 echo "Temporary PostgreSQL user and database created:\n";
 
                 // Setup temporary NodeBB to ensure all packages are installed, faster setup
-                $cmd .= 'fuser -k 4567/tcp && ';
+                $cmd .= 'fuser -k 4567/tcp ; ';
                 $cmd .= 'su -s /bin/bash nodebb -c "cd /opt/nodebb && ';
                 $cmd .= 'export NODEBB_URL=\"http://localhost\" && ';
                 $cmd .= 'export NODEBB_ADMIN_USERNAME=\"temp_nodebb\" && ';
