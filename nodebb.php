@@ -217,10 +217,12 @@ if ( ! class_exists( 'NodeBB') ) {
                     $url = "https://$domain" . $subfolder;
                 }
                 $config = str_replace( '%nodebb_url%', $url, $config );
-                file_put_contents( $nodebb_folder . '/config.json', $config );
 
                 // Copy over pre-installed NodeBB runtime files
                 $hcpp->copy_folder( '/opt/nodebb', $nodebb_folder, $user );
+
+                // Overwrite the config.json file
+                file_put_contents( $nodebb_folder . '/config.json', $config );
 
                 // Invoke the setup script to install NodeBB
                 $cmd = 'export NODEBB_ADMIN_USERNAME="' . $options['nodeBB_username'] . '" && ';
